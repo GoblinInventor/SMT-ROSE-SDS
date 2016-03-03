@@ -1,0 +1,176 @@
+\documentclass[11pt]{article}
+\setlength{\topmargin}{-.5in}
+\setlength{\textheight}{9in}
+\setlength{\oddsidemargin}{.125in}
+\setlength{\textwidth}{6.25in}
+\begin{document}
+\title{Software Design Document for ROSE SMT Interface}
+\author{Michael Hoffman\\
+ROSE Compiler Group LLNL\\
+\renewcommand{\today}{March 2, 2016}
+\maketitle
+
+\section{Introduction}
+This is the SDS for the SMTPathFeasibility project using the ROSE Compiler. The program will translate the ROSE AST (Abstract Syntax Tree) and CFG (Control Flow Graph) to a form usable by SMT Solvers under a general solving standard with an abstract base class for different solver architectures.
+\section{Goals}
+The SMTPathFeasibility project should have the following characteristics:\\
+\begin{enumeration}
+\item Easily extensible to other solvers
+\begin{enumeration}
+\item Separation of solver from ROSE analysis
+\item Attributes common to solvers in an abstract base class Solver
+\item Allow solvers to be used even if they have limited solving capability (or are specially tailored). 
+\item Base class specifications of virtual functions should be limited enough to keep a specific implementation as straightforward as possible. Extra capabilities may be very helpful (especially in the case of mu-Z3 where loops are more easily described, see mu-Z3 and Loops for further information 
+\end{enumeration}
+\end{enumeration}
+\section{Coverage Necessities}
+\section{Types}
+\section{ANSI C Types and Values And ROSE SgNode}
+\subsection{ANSI C SgTypes Supported}
+\begin{enumeration}
+\item char - SgTypeChar
+\item signed char - SgTypeSignedChar
+\item unsigned char - SgTypeUnsignedChar
+\item short - SgTypeShort
+\item short int - SgTypeShort
+\item signed short - SgTypeSignedShort
+\item signed short int - SgTypeSignedShort
+\item unsigned short - SgTypeUnsignedShort
+\item unsigned short int - SgTypeUnsignedShort
+\item int - SgTypeInt
+\item signed - SgTypeSignedInt
+\item signed int - SgTypeSignedInt
+\item unsigned - SgTypeUnsignedInt
+\item unsigned int - SgTypeUnsignedInt
+\item long - SgTypeLong
+\item long int - SgTypeLong
+\item signed long - SgTypeSignedLong
+\item signed long int - SgTypeSignedLong
+\item unsigned long - SgTypeUnsignedLong
+\item unsigned long int - SgTypeUnsignedLong
+\item long long - SgTypeLongLong
+\item long long int - SgTypeLongLong
+\item signed long long - SgTypeSignedLongLong
+\item signed long long int - SgTypeSignedLongLong
+\item unsigned long long - SgTypeUnsignedLongLong
+\item unsigned long long int - SgTypeUnsignedLongLong
+\item float - SgTypeFloat
+\item double - SgTypeDouble
+\item long double - SgTypeLongDouble
+\item enum - SgEnumType (SgNamedType)
+\item union - SgNa
+\item arrays (1) - SgArrayType
+\item functions (1) - SgFunctionType
+\item pointers (2) - SgPointerType
+\item struct - SgClassType (SgNamedType)
+\item union - SgClassType (SgNamedType)
+\item labels - SgTypeLabel
+\item void - SgTypeVoid
+\end{enumerate}
+\subsection{SgTypes Not Supported}
+\begin{enumerate}
+\item SgDeclType
+\item SgJavaUnionType
+\item SgModifierType
+\item SgQualifiedNameType
+\item SgReferenceType
+\item SgRvalueReferenceType
+\item SgTemplateType
+\item SgTypeBool
+\item SgTypeCAFTeam
+\item SgTypeComplex
+\item SgTypeCrayPointer
+\item SgTypeDefault
+\item SgTypeEllipse
+\item SgTypeGlobalVoid
+\item SgTypeImaginary
+\item SgTypeMatrix
+\item SgTypeNullptr
+\item SgTypeOfType
+\item SgTypeSigned128bitInteger
+\item SgTypeString
+\item SgTypeTuple
+\item SgTypeUnknown
+\item SgTypeUnsigned128bitInteger
+\item SgTypeWchar
+\end{enumerate}
+TODO: Check enumeration correctness
+\subsection{Value Nodes Supported}
+\begin{enumerate}
+\item SgCharVal
+\item SgDoubleVal
+\item SgEnumVal
+\item SgFloatVal
+\item SgIntVal
+\item SgLongDoubleVal
+\item SgLongIntVal
+\item SgLongLongIntVal
+\item SgShortVal  
+\item SgUnsignedCharVal
+\item SgUnsignedIntVal
+\item SgUnsignedLongVal
+\item SgUnsignedShortVal
+\end{enumerate}
+\subsection{Value Nodes Not Supported}
+\begin{enumerate}
+\item SgBoolValExp
+\item SgComplexVal
+\item SgNullptrValExp
+\item SgStringVal
+\item SgTemplateParameterVal
+\item SgUpcMythread
+\item SgUpcThreads
+\item SgWcharVal
+\end{enumerate}
+\section{Expressions and SMT}
+\subsection{Expression Nodes Supported}
+\begin{enumerate}
+\item 
+
+\subsection{Expression Nodes Not Supported}
+\begin{enumerate}
+\item SgActualArgumentExpression
+\item SgAlignOfOp
+
+
+\section{Following Yacc Grammar For Translation to SMT Forms}
+SOURCE: https://www.lysator.liu.se/c/ANSI-C-grammar-y.html#assignment-expression
+Starting at statement:
+labeled\_statement:
+Concept is not represented in ROSE as per\\
+http://rosecompiler.org/ROSE\_HTML\_Reference/classSgLabelStatement.html\\
+compound\_statement:
+Just a statement list or a declaration list, this should not be a problem for the solver because the translator preparing info for the solver does not recognize a compound\_statement as a specific unit, instead it is deconstructed into individual statements and given to the solver in that form.\\
+expression\_statement:
+Expressions are handled later in this document
+selection\_statement:
+We're dealing with SgIfStmt or an SgSwitchStatement
+In the if statement we're dealing with 
+IF '(' expression ')' statement
+or
+IF '(' expression ')' statement ELSE statement
+Given SgIfStmt, we can retrieve information as follows as per ROSE documentation\\
+conditional expression: use
+get\_conditional()
+which returns SgStatement* which should be a SgExprStatement which will be handled as an expression by SgExprStatement with
+get\_expression()
+which returns an SgExpression* that is potentially empty. We need to check that it is not the case, and for now that will cause a failure
+
+
+
+\section{Type Promotion}
+NOT YET DONE
+
+
+
+\section{mu-Z3 and Loops}
+NOT YET DONE
+\section{Fixed Point Methods for Analysis}
+NOT YET DONE
+\section{mu-Z3 and the typical solver necessities}
+NOT YET DONE
+\section{Generalizability of Fixed Point Methods}
+NOT YET DONE
+\end{document}
+
+
