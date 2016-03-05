@@ -95,7 +95,7 @@ The SMTPathFeasibility project should have the following characteristics:\\
 \item SgTypeWchar
 \end{enumerate}
 TODO: Check enumeration correctness
-\subsection{Value Nodes Supported}
+\subsection{Value Expression Nodes Supported}
 \begin{enumerate}
 \item SgCharVal
 \item SgDoubleVal
@@ -122,29 +122,200 @@ TODO: Check enumeration correctness
 \item SgUpcThreads
 \item SgWcharVal
 \end{enumerate}
+
 \section{Expressions and SMT}
 \subsection{Expression Nodes Supported}
 \begin{enumerate}
-\item 
+\item SgBinaryOp - see Binary Op Nodes Supported
+\item SgClassExp - struct and union
+\item SgConditionalExp - ternary "test ? true : false"
+\item SgExprListExp 
+\item SgFuntionParameterRefExp
+\item SgFunctionRefExp
+\item SgInitializerExp - see Initializer Exp Nodes Supported
+\item SgLabelRefExp
+\item SgSizeOfOp
+\item SgStatementExpression
+\item SgUnaryOp -- see Unary Ops Supported
+\item SgValueExp -- see Value Expressions Supported
+\item SgVarRefExp 
+
+\end{enumerate}
 
 \subsection{Expression Nodes Not Supported}
 \begin{enumerate}
 \item SgActualArgumentExpression
 \item SgAlignOfOp
+\item SgAsmOp
+\item SgAsterixShapeExp
+\item SgCAFCoExpression
+\item SgCallExpression - C++ only SgFunctionCallExp
+\item SgClassNameRefExp
+\item SgColonShapeExp
+\item SgCompoundLiteralExp
+\item SgComprehension
+\item SgCudaKernelExecConfig
+\item SgDeleteExp
+\item SgDictionaryComprehension
+\item SgDictionaryExp
+\item SgHereExp
+\item SgImpliedDo
+\item SgIOItemExpression
+\item SgJavaAnnotation
+\item SgJavaInstanceOfOp
+\item SgJavaTypeExpression
+\item SgKeyDatumPair
+\item SgListComprehension
+\item SgMagicColonExp
+\item SgMemberFunctionRefExp - need to check this
+\item SgNaryOp
+\item SgNewExp
+\item SgNoexceptOp
+\item SgNullExpression - need to check this
+\item SgPseudoDestructorRefExp
+\item SgRangeExp
+\item SgSetComprehension
+\item SgSubscriptExpression
+\item SgSuperExp
+\item SgTemplateFunctionRefExp
+\item SgTemplateFunctionMemberRefExp
+\item SgThisExp
+\item SgTypeExpression - need to check this
+\item SgTypeIdOp
+\item SgTypeTraitBuiltinOperator
+\item SgUnknownArrayOrFunctionReference
+\item SgUpcBlocksizeofExpression
+\item SgUpcLocalsizeExpression
+\item SgVarArgCopyOp
+\item SgVarArgEndOp
+\item SgVarArgOp
+\item SgVariantExpression - need to check this
+\item SgYieldExpression - need to check this
+\end{enumerate}
 
+
+\subsection{Binary Op Nodes Supported}
+\begin{enumerate}
+\item SgAddOp
+\item SgAndOp
+\item SgArrowExp
+\item SgAssignOp
+\item SgBitAndOp
+\item SgBitOrOp
+\item SgBitXorOp
+\item SgDivideOp
+\item SgEqualityOp
+\item SgGreaterOrEqualOp
+\item SgGreaterThanOp
+\item SgIntegerDivideOp
+\item SgLessOrEqualOp
+\item SgLessThanOp
+\item SgLshiftOp
+\item SgModOp
+\item SgMultiplyOp
+\item SgNotEqualOp
+\item SgOrOp
+\item SgPntrArrRefExp
+\item SgRshiftOp
+\item SgSubtractOp
+
+\end{enumerate}
+
+\subsection{Binary Op Nodes Not Supported}
+\begin{enumerate}
+\item SgCommaOpExp
+\item SgConcatenationOp
+\item SgDotExp
+\item SgDotStarOp
+\item SgElementwiseOp
+\item SgExponentiationOp
+\item SgIsNotOp
+\item SgIsOp
+\item SgJavaUnsignedRshiftOp
+\item SgLeftDivideOp
+\item SgMembershipOp
+\item SgNonMembershipOp
+\item SgPointerAssignOp
+\item SgPowerOp
+\item SgScopeOp - Deprecated
+\item SgUserDefinedBinaryOp
+\end{enumerate}
+
+\subsection{Compound Assign Op Nodes Supported}
+\begin{enumerate}
+\item SgAndAssignOp
+\item SgDivAssignOp
+\item SgLshiftAssignOp
+\item SgMinusAssignOp
+\item SgModAssignOp
+\item SgPlusAssignOp
+\item SgRshiftAssignOp
+\item SgXorAssignOp
+\end{enumerate}
+
+\subsetion{Compound Assign Op Nodes Not Supported}
+\begin{enumerate}
+\item SgExponentiationAssignOp
+\item SglorAssignOp
+\item SgJavaUnsignedRshiftAssignOp
+\end{enumerate}
+
+\subsection{Initializer Nodes Supported}
+\begin{enumerate}
+\item SgAggregateInitializer - "int x[2] = {1,2}"
+\item SgAssignInitializer - "int x = 1", 1 wrapped in SgAssignInializer
+\end{enumerate}
+
+\subsection{Initializer Nodes Not Supported}
+\begin{enumerate}
+\item SgCompoundAssignInitializer - need to check this
+\item SgConstructorInitializer - never used
+\item SgDesignatedInitializer - need to check this
+\end{enumerate}
+
+\subsection{Unary Ops Supported}
+\begin{enumerate}
+\item SgAddressOfOp
+\item SgBitComplementOp
+\item SgCastExp
+\item SgMinusMinusOp
+\item SgMinusOp
+\item SgNotOp
+\item SgPlusPlusOp
+\item SgPointerDerefExp
+\end{enumerate}
+
+\subsection{Unary Ops Not Supported}
+\begin{enumerate}
+\item SgConjugateOp
+\item SgExpressionRoot - need to check this
+\item SgImagPartOf
+\item SgMatrixTransposeOp
+\item SgRealPartOp
+\item SgThrowOp
+\item SgUnaryAddOp -- need to check this
+\item SgUserDefinedUnaryOp
+\end{enumerate}
 
 \section{Following Yacc Grammar For Translation to SMT Forms}
 SOURCE: https://www.lysator.liu.se/c/ANSI-C-grammar-y.html#assignment-expression
 Starting at statement:
+\section{Statements}
+\subsection{Labeled Statement}
 labeled\_statement:
 Concept is not represented in ROSE as per\\
 http://rosecompiler.org/ROSE\_HTML\_Reference/classSgLabelStatement.html\\
-compound\_statement:
+\subsection{Compound Statement}
 Just a statement list or a declaration list, this should not be a problem for the solver because the translator preparing info for the solver does not recognize a compound\_statement as a specific unit, instead it is deconstructed into individual statements and given to the solver in that form.\\
+\subsection{Expression Statement}
 expression\_statement:
+We can access the interior expression via
+get\_expression
 Expressions are handled later in this document
+\subsection{Selection Statement}
 selection\_statement:
 We're dealing with SgIfStmt or an SgSwitchStatement
+\subsubsection{If Statement}
 In the if statement we're dealing with 
 IF '(' expression ')' statement
 or
@@ -155,7 +326,46 @@ get\_conditional()
 which returns SgStatement* which should be a SgExprStatement which will be handled as an expression by SgExprStatement with
 get\_expression()
 which returns an SgExpression* that is potentially empty. We need to check that it is not the case, and for now that will cause a failure
-
+We can access the body of the if and else via
+get\_true\_body()
+and
+get\_false\_body()
+each of which return an SgStatement, if both bodies exist, so we must check for the existence of the false\_body. According to the ROSE documentation these should specifically return an SgBasicBlock, so this assumption should be made assertion, potentially only in a debug mode, and any abnormalities can be dealt with. The association of false and true body needs to be explicitly stated so that the solver can easily form the conditional value for a specific path correctly.
+\subsubsection{Switch Statement}
+In the case of a switch statement we can get the item selector via
+get\_item\_selector
+which returns an SgExpression, which we can evaluate and the conditionals can be properly expressed. For example, if we have the relatively common cases without breaks we need to concatenate them with an or. This may cause a problem if short circuit evaluation is used so we will need to account for that. The body of the switch is accessible by
+get\_body()  
+In a normative case switch construct we will find
+SgCaseOptionStmt
+we can get the key for the statement via
+get\_key()
+which returns an expression statement and we can get the body via
+get\_body()
+which returns an SgBasicBlock
+\subsection{Iteration Statement: For, Do/While, While}
+The method for analyzing loops is noted in "Fixed Point Methods For Analysis" and "Alternatives to Fixed Point Methods"
+For extraction of necessary information
+\subsubsection{For Loops}
+As per the yacc grammar the For Loop is of the for
+FOR '(' expression\_statement expression\_statement ')' statement
+or
+FOR '(' expression\_statement expression\_statement expression ')' statement
+From ROSE we get the first expression statement via
+get\_for\_init\_stmt()
+We then use
+get\_init\_stmt()
+on the SgForInitStmt to get a 
+SgStatementPtrList\&
+which is a typedef of STL list, so we can manipulate that via
+empty
+to check if the for init is empty
+begin
+to get the iterator (call it ITR) to the beginning and iterate through via ++ITR
+We then transform each statement into its SMT compatible class
+\subsection{Jump Statements}
+Jump statements (break, continue, goto) need to be considered within their own scope. This is handled in Fixed Point Methods For Analysis.
+\section{Expressions}
 
 
 \section{Type Promotion}
@@ -171,6 +381,7 @@ NOT YET DONE
 NOT YET DONE
 \section{Generalizability of Fixed Point Methods}
 NOT YET DONE
+\setion{Alternatives to Fixed Point Methods}
 \end{document}
 
 

@@ -25,7 +25,7 @@ class SMTExpression {
 		~SMTExpression() {}
 		int get_type() { return smt_expression_type; }
 	
-}			
+};			
 	
 class SMTValueExpression : SMTExpression 
 {
@@ -147,7 +147,7 @@ class SMTVariableExpression : SMTExpression
 			base_name = init_full_name; 
 			full_name = init_base_name;
 		}
-	};
+};
 
  	//bool assigned;
 	int SMTVariableExpression::get_assigned(bool& my_assigned)

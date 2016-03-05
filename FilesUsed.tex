@@ -1,0 +1,62 @@
+This is a record of the files used in the creation of various programs for the SMTPathFeasibility project
+
+what analyze uses
+- src/analyzePath.cpp
+- src/handleVariablesForSMTLib.cpp
+- src/getStatementInfoForSMTLib.cpp
+- src/analyzePathUtils.cpp
+- src/collectPaths.cpp
+- src/extractPragmaInfo.cpp
+- src/initializeExpressions.cpp
+-- INCLUDES 
+- include/utilHeader.h
+
+how analyze works
+- get file via frontend(argc,argv)
+- fixAllPrefixPostfix
+-- in analyzePathUtils.cpp
+-- accepts an SgProject
+-- gets all unary ops
+-- calls replacePrefixPostfix
+-- replacePrefixPostfixOp - src/initializeExpressions.cpp
+--- accepts an SgNode and a ScopeStatement, checks if it is a node we care about (SgMinusMinusOp or SgPlusPlusOp). Identifies prefix/postfix via SgUnaryOp::Sgop_mode m = isSgUnaryOp->get_mode(). 0 means prefix, 1 means postfix
+--- attempts to replace them with binary op expressions and value expressions, but currently this is broken b/c it doesn't manipulate them correctly
+--- return to fixAllPrefixPostfix
+-- return to analyze
+- initializeScopeInformation
+-- in src/getStatementInfoForSMTLib.cpp
+-- This runs through all SgScopeStatements in the project and identifies each Scope Statement with a unique integer
+-- stores this in scopeStatementToInteger (statement to int) and scopeIntegerToStatement (int to statement)
+--- scopeStatementToInteger is std::map<SgScopeStatement*, int> defined in getStatementInfoForSMTLib.cpp
+--- used in getStatementInfoForSMTLib.cpp to assign values
+--- used in handleVariablesForSMTLib.cpp to name variables to avoid naming problems when making names for the SMT solvers
+-- returns to analyze
+- get the main function
+- get the StaticCFG - cfg, the SgIncidenceDirectedGraph g, and create a PathCollector called pathCollector with g, and cfg (pass the reference of cfg)
+- see PathCollector information later in this document
+
+
+
+
+- PathCollector
+-- header in include/utilHeader.h, implementation in src/collectPaths
+-- requires SgIncidenceDirectedGraph and StaticCFG::CFG for initialization
+-- PathCollector(SgIncidenceDirectedGraph*, StaticCFG::CFG*)
+-- has private data structures
+--- std::vector<std::vector<SgGraphNode*> > pathSet
+--- StaticCFG::CFG* cfg
+--- SgIncidenceDirectedGraph* graph
+-- Graph accessor SgIncidenceDirectedGraph* getGraph()
+-- function addPath accepts const std::vector<SgGraphNode*> pass by reference, pushes into pathSet private variable
+-- function void clearPaths()
+--- clears pathSet
+-- function CFGNode getEquivCFGNode(SgGraphNode* node)
+--- just uses cfg->toCFGNode(node)
+-- function int getEquivCFGNodeIndex(SgGraphNode* node)
+--- just uses cfg->toCFGNode(node).getIndex();
+-- function StaticCFG* getStaticCFG() 
+--- accessor for private cfg
+-- function std::map<SgNode*, std::string> getAssociationsForPath(std::vector<SgGraphNode*> path)
+--- looks at all nodes with at least two out edges, gets EdgeConditionKind for each edge, then associates eckTrue with "true", eckFalse with "false", this is important to make sure we are correctly evaluating conditionals for example in an if statement it allows us to know which edge was used in the specific path under consideration
+-- replaces prefix and postfix ++ -- expressions so that it is clear when the nodes are evaluated
+-- 
