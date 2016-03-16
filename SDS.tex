@@ -130,7 +130,7 @@ TODO: Check enumeration correctness
 \item SgClassExp - struct and union
 \item SgConditionalExp - ternary "test ? true : false"
 \item SgExprListExp 
-\item SgFuntionParameterRefExp
+\item SgFunctionParameterRefExp
 \item SgFunctionRefExp
 \item SgInitializerExp - see Initializer Exp Nodes Supported
 \item SgLabelRefExp
@@ -295,6 +295,134 @@ TODO: Check enumeration correctness
 \item SgThrowOp
 \item SgUnaryAddOp -- need to check this
 \item SgUserDefinedUnaryOp
+\end{enumerate}
+
+\subsection{Statements Supported}
+\begin{enumerate}
+\item SgBreakStmt
+\item SgCaseOptionStmt
+\item SgContinueStmt
+\item SgDeallocationStatment
+\item SgDeclarationStatment -- see Supported Declaration Statements
+\item SgDefaultOptionStmt
+\item SgForInitStatement
+\item SgGotoStatement
+\item SgLabelStatement
+\item SgReturnStmt
+
+\end{enumerate}
+
+\subsection{Statements Not Supported}
+\begin{enumerate}
+\item SgAllocateStatement
+\item SgArithmeticIf
+\item SgAssertStatement
+\item SgAsyncStmt
+\item SgAtStmt
+\item SgCatchStatementSeq
+\item SgComputedGotoStatement
+\item SgElseWhereStatement
+\item SgExecStatement
+\item SgFinishStmt
+\item SgFunctionTableType
+\item SgIOStatement
+\item SgJavaSynchronizedStatement
+\item SgJavaThrowStatement
+\item SgNullifyStatement
+\item SgNullStatement
+\item SgOmpBarrierStatement
+\item SgOmpBodyStatement
+\item SgOmpFlushStatement
+\item SgPassStatement
+\item SgPythonGlobalStmt
+\item SgPythonPrintStmt
+\item SgSequenceStatement
+\item SgSpawnStmt
+\item SgStopOrPauseStatement
+\item SgTryStmt
+\item SgUpcBarrierStatement
+\item SgUpcFenceStatement
+\item SgUpcNotifyStatement
+\item SgUpcWaitStatement
+\item SgVariantStatement
+\item SgWhereStatement
+\item SgWithStatement
+\end{enumerate}
+
+\subsection{Scope Statements Supported}
+\begin{enumerate}
+\item SgBasicBlock
+\item SgCaseOptionStmt
+\item SgClassDefinition -- see classes in C
+\item SgDoWhileStmt
+\item SgForStatement
+\item SgFunctionDefinition
+\item SgIfStmt
+\item SgSwitchStatement
+\item SgWhileStmt
+\end{enumerate}
+
+\subsection{Scope Statements Not Supported}
+\begin{enumerate}
+\item SgAssociateStatement
+\item SgBlockDataStatement
+\item SgCAFWithTeamStatement
+\item SgForAllStatement
+\item SgFortranDo
+\item SgFunctionPaameterScope
+\item SgGlobal
+\item SgJavaForEachStatement
+\item SgJavaLabelStatement
+\item SgMatlabForStatement
+\item SgNamespaceDefinitionStatement
+\item SgUpcForAllStatement
+\end{enumerate}
+
+
+\subsection{Declarations Supported}
+\begin{enumerate}
+\item SgClassDeclaration -- see Class Declaration Node in C
+\item SgEnumDeclaration
+\item SgFunctionDeclaration -- see Function Declarations Supported
+\item SgFunctionParameterList
+\item SgParameterStatement
+\item SgPragmaDeclaration
+\item SgTypedefDeclaration
+\item SgVariableDeclaration
+\item SgVariableDefinition
+\end{enumerate}
+
+
+\subsection{Declarations Not Supported}
+\begin{enumerate}
+\item SgAsmStmt
+\item SgAttributeSpecificationStatement
+\item SgC\_PreprocessorDirectiveStatement
+\item SgClinkageDeclarationStatement
+\item SgCommonBlock
+\item SgContainsStatement
+\item SgCtorInitializerList
+\item SgEquivalenceStatement
+\item SgFormatStatement
+\item SgFortranIncludeLine
+\item SgImplicitStatement
+\item SgImportStatement
+\item SgInterfaceStatement
+\item SgJavaImportStatement
+\item SgJavaPackageStatement
+\item SgMicrosoftAttributeDeclaration
+\item SgNamelistStatement
+\item SgNamespaceAliasDeclarationStatement
+\item SgNamespaceDeclarationStatement
+\item SgOmpThreadprivateStatement
+\item SgStatementFunctionStatement
+\item SgStaticAssertionDeclaration
+\item SgStmtDeclarationStatement
+\item SgTemplateDeclaration
+\item SgTemplateInstantiationDirectiveStatement 
+\item SgUseStatement
+\item SgUsingDeclarationStatement
+\item SgUsingDirectiveStatement
 \end{enumerate}
 
 \section{Following Yacc Grammar For Translation to SMT Forms}
